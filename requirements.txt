@@ -1,0 +1,13 @@
+langchain
+langchain-core
+langchain-community
+pypdf
+pymupdf
+sentence-transformers
+faiss-cpu
+langchain-groq
+python-dotenv
+pydantic>=2.10.0
+# Web Server
+fastapi[standard]>=0.128.0
+uvicorn>=0.30.0
