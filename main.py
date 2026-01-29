@@ -10,8 +10,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings # Updated 2026 package
-
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 load_dotenv()
 app = FastAPI()
 
@@ -20,7 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent
 INDEX_PATH = BASE_DIR / "faiss_index"
 
 
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+HF_TOKEN = os.getenv("HF_TOKEN") 
+
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    task="feature-extraction",
+    huggingfacehub_api_token=HF_TOKEN
+)
 
 if not INDEX_PATH.exists():
     raise RuntimeError(f"Index folder not found at {INDEX_PATH}")
@@ -64,6 +69,5 @@ def health():
 
 
 if __name__ == "__main__":
-    # Render provides a PORT environment variable. We MUST use it.
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
