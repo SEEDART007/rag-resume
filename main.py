@@ -16,8 +16,9 @@ load_dotenv()
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",  
-    "https://resume-chatbot-liart.vercel.app/", 
+    "http://localhost:5173",
+    "https://resume-chatbot-liart.vercel.app",  
+    "https://www.resume-chatbot-liart.vercel.app", 
 ]
 
 
