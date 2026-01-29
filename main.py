@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 
 from langchain_groq import ChatGroq
@@ -13,6 +14,20 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
 load_dotenv()
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  
+    "https://your-frontend-site.vercel.app", 
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,      # Allow specific origins
+    allow_credentials=True,     # Allow cookies/auth headers
+    allow_methods=["*"],        # Allow all methods (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],        # Allow all headers
+)
 
 
 BASE_DIR = Path(__file__).resolve().parent
