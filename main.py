@@ -61,3 +61,9 @@ async def chat_with_bot(request: ChatRequest):
 @app.get("/health")
 def health():
     return {"status": "online", "model": "llama-3.3-70b-versatile"}
+
+
+if __name__ == "__main__":
+    # Render provides a PORT environment variable. We MUST use it.
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
